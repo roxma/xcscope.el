@@ -863,9 +863,7 @@ be removed by quitting the cscope buffer."
   "List of hooks to call when entering cscope-minor-mode.")
 
 (defvar cscope-display-buffer-args
-  (and (not cscope-running-in-xemacs)
-       (>= emacs-major-version 24)
-       '((display-buffer-use-some-window (inhibit-same-window . t))))
+       '((display-buffer-same-window (inhibit-same-window . nil)))
   "Default arguments to `display-buffer'. This applies to ACTION
 and FRAME arguments of the newer `display-buffer' in >= GNU Emacs
 24. This controls how and where the *cscope* buffer is popped up.
@@ -1727,7 +1725,7 @@ Push current point on mark ring and select the entry window."
 	window)
     (setq window (cscope-show-entry-internal navprops t))
     (if (windowp window)
-	(select-window window))
+        (select-window window))
     )
   (if cscope-close-window-after-select
     (delete-windows-on cscope-output-buffer-name)))
@@ -2660,7 +2658,7 @@ this is."
 
     (if cscope-display-cscope-buffer
 	(progn
-	  (pop-to-buffer outbuf)
+	  (pop-to-buffer-same-window outbuf)
 	  (cscope-help))
       (set-buffer outbuf))
     (cscope-list-entry-mode)
